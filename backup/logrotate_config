@@ -1,0 +1,16 @@
+/opt/log/sausage-store-frontend.log
+/opt/log/sausage-store-backend.log {
+  rotate 3
+  hourly
+  compress
+  missingok
+  size 10M
+  dateext
+  create
+  prerotate
+        echo sudo hwclock >> /opt/student_rotate.log
+  endscript
+  postrotate
+        echo sudo hwclock >> /opt/student_rotate.log
+  endscript
+}
