@@ -4,9 +4,9 @@ variable "image_id" {
 variable "zone" {
   type        = string
 }
-variable "subnet_id" {
-  type        = string
-}
+# variable "subnet_id" {
+#   type        = string
+# }
 variable "cloud_id" {
   type        = string
 }
