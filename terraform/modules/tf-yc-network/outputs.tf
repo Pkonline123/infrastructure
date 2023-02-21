@@ -1,9 +1,9 @@
-output "vpc_network" {
+output "yandex_vpc_network" {
   description = "vpc_network"
   value = data.vpc_network.default.name
 }
 
-output "vpc_subnets" {
+output "yandex_vpc_subnet" {
   description = "Yandex.Cloud Subnets map"
   value       = data.vpc_subnet.default
 }
