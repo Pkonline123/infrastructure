@@ -1,5 +1,5 @@
 data "yandex_vpc_network" "default" {
-  name = "default"
+  name = "ru-central1-a"
 }
 
 data "yandex_vpc_subnet" "default" {
