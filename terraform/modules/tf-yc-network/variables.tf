@@ -1,5 +1,5 @@
 variable "network_zones" {
-  default     = "ru-central1-a"
+  default     = ["ru-central1-a"]
   type        = set(string)
   description = "Instance availability zone"
   validation {
