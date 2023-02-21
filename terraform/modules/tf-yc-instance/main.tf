@@ -1,5 +1,5 @@
 resource "yandex_compute_instance" "vm-1" {
-  name = "prac-2-student-013-20"
+  name = "chapter-5-prac-2-student-013-20"
   #scheduling_policy = ""
   platform_id = var.platform_id
   zone = var.zone
