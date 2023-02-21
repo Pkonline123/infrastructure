@@ -9,3 +9,10 @@ variable "network_zones" {
   sensitive = true
   nullable  = false
 }
+variable "zone" {
+  default     = "ru-central1-a"
+  type        = string
+  description = "availability zone"
+  sensitive = true
+  nullable  = false
+}
