@@ -22,6 +22,6 @@ resource "yandex_compute_instance" "vm-1" {
   }
 
   metadata = {
-    user-data = "${file("../../meta.txt")}"
+    user-data = "${file("${path.module}/meta.txt")}"
   }
 }
