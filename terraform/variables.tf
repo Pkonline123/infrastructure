@@ -5,7 +5,7 @@ variable "zone" {
   type        = string
 }
 variable "subnet_id" {
-  type        = set(string)
+  type        = string
 }
 variable "cloud_id" {
   type        = string
