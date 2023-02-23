@@ -13,3 +13,6 @@ variable "cloud_id" {
 variable "folder_id" {
   type        = string
 }
+variable "im_token" {
+  type        = string
+}
