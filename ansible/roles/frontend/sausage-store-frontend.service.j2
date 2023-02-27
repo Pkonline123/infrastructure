@@ -1,0 +1,14 @@
+[Unit]
+Description=Sausage front
+
+[Service]
+ExecStart=/usr/bin/http-server {{frontend_path}}/frontend -p 8080 --proxy http://10.128.0.83:8080
+User=front-user
+StandardOutput=file:{{frontend_path}}/out-front.log
+StandardError=file:{{frontend_path}}/out-front-report.log
+Restart=always
+
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+
+[Install]
+WantedBy=multi-user.target

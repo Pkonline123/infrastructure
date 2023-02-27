@@ -1,0 +1,12 @@
+- name: Play for sausage store front
+  hosts: sausageVM
+  roles:
+    - frontend
+    - backend
+  vars_files: ./group_vars/sausage_store.yaml
+
+# - name: Play for sausage store back
+#   hosts: sausageVM
+#   roles:
+#     - backend
+#   vars_files: ./group_vars/backend.yaml

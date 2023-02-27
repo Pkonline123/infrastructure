@@ -1,0 +1,6 @@
+backend_user: jarservice
+backend_version: 1.0.405339
+backend_path: /var/jarservice
+frontend_user: www-data
+frontend_version: 1.0.405254
+frontend_path: /var/www-data/dist
