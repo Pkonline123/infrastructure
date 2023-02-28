@@ -1,0 +1,63 @@
+- name: Update apt
+  apt:
+    upgrade: yes
+    update_cahe: yes
+
+- name: Install Java
+  become: true
+  apt:
+    name: "{{packages}}"
+  vars:
+    packages:
+      - python
+      - python3-pip
+      - python3
+      - openjdk-16-jdk
+
+- name: install lxml
+  pip:
+    name: lxml
+    state: latest
+
+- name: Add service user for backend
+  user:
+    name: "{{backend_user}}"
+    create_home: no
+    shell: /sbin/nologin
+
+- name: Create directory
+  file:
+    path: "{{backend_path}}/log"
+    state: directory
+
+- name: Download artifact from nexus
+  maven_artifact:
+    dest: "{{backend_path}}"
+    repossitory_url: "{{nexus_url}}-backend/"
+    group_id: "com.yandex.pacticum.devops"
+    artifact_id: "sausage-store"
+    version: "{{backend_version}}"
+    username: "{{nexus_user}}"
+    password: "{{nexus_password}}"
+
+- name: Add permission
+  ansible.builtin.file:
+    path: "{{backend_path}}/sausage-store.jar"
+    owner: "{{backend_user}}"
+    group: "{{backend_user}}"
+    mode: "0777"
+
+- name: Copy unit-file to server
+  template:
+    src: sausage-store-backend.service.j2
+    dest: /etc/systemd/system/sausage-store-backend.service
+
+- name: Reloading systemd
+  systemd:
+      daemon_reload: true
+
+- name: Start backend
+  service:
+    name: sausage-store-backend
+    state: started
+    enabled: true
