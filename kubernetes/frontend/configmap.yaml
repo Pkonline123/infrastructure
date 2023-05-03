@@ -1,15 +1,30 @@
 ---
-apiVersion: v1
-kind: Pod
+apiVersion: apps/v1
+kind: ReplicaSet
 metadata:
   name: frontend
+  labels:
+    app: frontend
 spec:
-  containers:
-  - name: frontend
-    image: gitlab.praktikum-services.ru:5050/std-013-20/infrastructure:latest
-    imagePullPolicy: IfNotPresent
-    ports:
-        - name: frontend
-          containerPort: 80
-  imagePullSecrets:
-        - name: docker-config-secret
+  replicas: 3
+  # Стратегия развёртывания. Recreate — удалит сначала все старые Pod'ы 
+  # Есть и более гибкая стратегии, например, RollingUpdate, которая будет обновлять Pod'ы порциями  
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - name: frontend
+        image: gitlab.praktikum-services.ru:5050/std-013-20/infrastructure:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+            - name: frontend
+              containerPort: 80
+      imagePullSecrets:
+            - name: docker-config-secret
