@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  containers:
+  - name: frontend
+    image: gitlab.praktikum-services.ru:5050/std-013-20/infrastructure:latest
+    imagePullPolicy: IfNotPresent
+    ports:
+        - name: frontend
+          containerPort: 80
+  imagePullSecrets:
+        - name: docker-config-secret
