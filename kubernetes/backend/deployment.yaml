@@ -22,15 +22,12 @@ spec:
       containers:
       - name: backend
         image: gitlab.praktikum-services.ru:5050/std-013-20/sausage-store/sausage-backend:latest
-        volumeMounts:
-          - mountPath: /home/student/logsBackDocker
-            name: REPORT_PATH
         imagePullPolicy: IfNotPresent
         env:
           - name: SPRING_DATASOURCE_URL
             value: jdbc:postgresql://rc1b-txenjeot0qbcbnh3.mdb.yandexcloud.net:6432/std-013-20
-          # - name: REPORT_PATH
-          #   value: ./logs
+          - name: REPORT_PATH
+            value: ./logs
           - name: SPRING_DATASOURCE_PASSWORD
             value: P@ssw0rd
           - name: SPRING_DATASOURCE_USERNAME
