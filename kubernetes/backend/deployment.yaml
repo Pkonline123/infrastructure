@@ -22,6 +22,9 @@ spec:
       containers:
       - name: backend
         image: gitlab.praktikum-services.ru:5050/std-013-20/sausage-store/sausage-backend:latest
+        volumeMounts:
+          - mountPath: /home/student/logsBackDocker
+            name: logs
         imagePullPolicy: IfNotPresent
         env:
           - name: SPRING_DATASOURCE_URL
