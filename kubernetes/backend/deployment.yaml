@@ -20,46 +20,29 @@ spec:
         app: backend
     spec:
       containers:
-      - name: backend
-        image: gitlab.praktikum-services.ru:5050/std-013-20/sausage-store/sausage-backend:latest
-        imagePullPolicy: IfNotPresent
-        env:
-          - name: SPRING_DATASOURCE_URL
-            value: jdbc:postgresql://rc1b-txenjeot0qbcbnh3.mdb.yandexcloud.net:6432/std-013-20
-          - name: REPORT_PATH
-            value: ./logs
-          - name: SPRING_DATASOURCE_PASSWORD
-            value: P@ssw0rd
-          - name: SPRING_DATASOURCE_USERNAME
-            value: std-013-20
-          - name: SPRING_DATA_MONGODB_URI
-            value: mongodb://std-013-20:P%40ssw0rd@rc1a-xb6q7pmw36t77ryz.mdb.yandexcloud.net:27018/std-013-20?tls=true
-        ports:
-          - name: backend
-            containerPort: 8080
-        livenessProbe:
-          httpGet:
-            path: /actuator/health
-            port: 8080
-          initialDelaySeconds: 15
-          periodSeconds: 30
-          timeoutSeconds: 2
-          failureThreshold: 6
+        - name: backend
+          image: gitlab.praktikum-services.ru:5050/std-013-20/sausage-store/sausage-backend:latest
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: REPORT_PATH
+              value: /app/logs
+          ports:
+            - name: backend
+              containerPort: 8080
+          volumeMounts:
+            - name: logs
+              mountPath: /app/logs
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 30
+            timeoutSeconds: 1
+            failureThreshold: 6
+      volumes:
+      - name: logs
+        path:
+          hostPath: /home/student/logsBackDocker
       imagePullSecrets:
         - name: docker-config-secret
-
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: backend
-  labels:
-    app: backend
-spec:
-  type: ClusterIP
-  ports:
-    - port: 8080
-      protocol: TCP
-      targetPort: 8080
-  selector:
-    app: backend
