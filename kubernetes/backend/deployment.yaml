@@ -42,7 +42,7 @@ spec:
             failureThreshold: 6
       volumes:
       - name: logs
-        path:
-          hostPath: /home/student/logsBackDocker
+        hostPath:
+          path: /home/student/logsBackDocker
       imagePullSecrets:
         - name: docker-config-secret
