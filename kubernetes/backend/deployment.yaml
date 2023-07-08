@@ -24,6 +24,21 @@ spec:
           image: gitlab.praktikum-services.ru:5050/std-013-20/sausage-store/sausage-backend:latest
           imagePullPolicy: IfNotPresent
           env:
+            - name: SPRING_DATASOURCE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: backend
+                  key: SPRING_DATASOURCE_URL
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: backend
+                  key: SPRING_DATASOURCE_PASSWORD
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: backend
+                  key: SPRING_DATASOURCE_USERNAME 
             - name: REPORT_PATH
               value: /app/logs
           ports:
@@ -41,8 +56,7 @@ spec:
             timeoutSeconds: 1
             failureThreshold: 6
       volumes:
-      - name: logs
-        hostPath:
-          path: /home/student/logsBackDocker
+        - name: logs
+          emptyDir: {}
       imagePullSecrets:
         - name: docker-config-secret
