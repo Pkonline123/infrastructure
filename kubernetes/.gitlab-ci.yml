@@ -6,8 +6,7 @@ stages:
 
 deploy:
   stage: deploy
-  image: traherom/kustomize-docker
-  #image: alpine/k8s:1.22.6
+  image: alpine/k8s:1.22.6
   #image: bitnami/kubectl:latest
   environment:
     name: k8s
@@ -18,4 +17,4 @@ deploy:
     - cat "$kubeconfig" > ~/.kube/config
     - chmod 644 ~/.kube/config
   script:
-    - kubectl apply -f kubernetes/ --recursive
+    - kubectl apply -f kubernetes/ --recursive --validate=false
