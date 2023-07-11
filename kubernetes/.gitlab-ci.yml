@@ -6,15 +6,15 @@ stages:
 
 deploy:
   stage: deploy
-  #image: alpine/k8s:1.22.6
-  image: bitnami/kubectl:latest
+  image: alpine/k8s:1.22.6
+  #image: bitnami/kubectl:latest
   environment:
     name: k8s
     url: https://std-013-20.k8s.praktikum-services.tech
   before_script:
     - mkdir -p ~/.kube
-    - sudo chmod 700 ~/.kube
+    - chmod 700 ~/.kube
     - cat "$kubeconfig" > ~/.kube/config
-    - sudo chmod 644 ~/.kube/config
+    - chmod 644 ~/.kube/config
   script:
     - kubectl apply -f kubernetes/ --recursive
