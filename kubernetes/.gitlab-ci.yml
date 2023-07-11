@@ -13,8 +13,8 @@ deploy:
     url: https://std-013-20.k8s.praktikum-services.tech
   before_script:
     - mkdir -p ~/.kube
-    - chmod 700 ~/.kube
+    - sudo chmod 700 ~/.kube
     - cat "$kubeconfig" > ~/.kube/config
-    - chmod 644 ~/.kube/config
+    - sudo chmod 644 ~/.kube/config
   script:
     - kubectl apply -f kubernetes/ --recursive
