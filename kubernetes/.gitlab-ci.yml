@@ -6,7 +6,8 @@ stages:
 
 deploy:
   stage: deploy
-  image: alpine/k8s:1.22.6
+  image: traherom/kustomize-docker
+  #image: alpine/k8s:1.22.6
   #image: bitnami/kubectl:latest
   environment:
     name: k8s
