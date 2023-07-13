@@ -30,7 +30,7 @@ spec:
           subPath: nginx.conf
           readOnly: true
       nodeSelector:
-        cpu: app=frontend
+        cpu: 'app=frontend'
       volumes:
       - name: nginx-conf
         configMap:
