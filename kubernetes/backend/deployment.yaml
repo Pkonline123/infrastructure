@@ -19,6 +19,11 @@ spec:
       labels:
         app: backend
     spec:
+      strategy:
+      type: RollingUpdate
+      rollingUpdate:
+        maxUnavailable: 20
+        maxSurge: 1
       containers:
         - name: backend
           image: gitlab.praktikum-services.ru:5050/std-013-20/sausage-store/sausage-backend:latest
@@ -55,6 +60,7 @@ spec:
             periodSeconds: 30
             timeoutSeconds: 1
             failureThreshold: 6
+      revisionHistoryLimit: 15
       volumes:
         - name: logs
           emptyDir: {}
