@@ -6,7 +6,10 @@ metadata:
   labels:
     app: frontend
 spec:
-  revisionHistoryLimit: 15 
+  revisionHistoryLimit: 15
+  affinity:
+    nodeAffinity:
+      cpu: app=frontend  
   strategy:
     type: Recreate
   selector:
@@ -17,9 +20,6 @@ spec:
       labels:
         app: frontend
     spec:
-      affinity:
-        nodeAffinity:
-          cpu: app=frontend 
       containers:
       - name: frontend
         image: gitlab.praktikum-services.ru:5050/std-013-20/sausage-store/sausage-frontend:latest
