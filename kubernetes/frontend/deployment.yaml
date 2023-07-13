@@ -17,6 +17,16 @@ spec:
       labels:
         app: frontend
     spec:
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 80
+              preference:            
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - frontend 
       containers:
       - name: frontend
         image: gitlab.praktikum-services.ru:5050/std-013-20/sausage-store/sausage-frontend:latest
@@ -29,8 +39,8 @@ spec:
           mountPath: /etc/nginx/nginx.conf
           subPath: nginx.conf
           readOnly: true
-      nodeSelector:
-        cpu: 'app=frontend'
+      # nodeSelector:
+      #   cpu: app=frontend
       volumes:
       - name: nginx-conf
         configMap:
