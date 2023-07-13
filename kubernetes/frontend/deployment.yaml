@@ -6,10 +6,10 @@ metadata:
   labels:
     app: frontend
 spec:
-  revisionHistoryLimit: 15
   affinity:
     nodeAffinity:
-      cpu: app=frontend  
+      cpu: app=frontend
+  revisionHistoryLimit: 15  
   strategy:
     type: Recreate
   selector:
