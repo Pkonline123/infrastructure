@@ -32,7 +32,6 @@ spec:
           mountPath: /etc/nginx/nginx.conf
           subPath: nginx.conf
           readOnly: true
-      revisionHistoryLimit: 15
       volumes:
       - name: nginx-conf
         configMap:
