@@ -10,7 +10,10 @@ spec:
   # Стратегия развёртывания. Recreate — удалит сначала все старые Pod'ы 
   # Есть и более гибкая стратегии, например, RollingUpdate, которая будет обновлять Pod'ы порциями  
   strategy:
-    type: Recreate
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 20
+      maxSurge: 1
   selector:
     matchLabels:
       app: backend
@@ -19,11 +22,6 @@ spec:
       labels:
         app: backend
     spec:
-      strategy:
-        type: RollingUpdate
-        rollingUpdate:
-          maxUnavailable: 20
-          maxSurge: 1
       containers:
         - name: backend
           image: gitlab.praktikum-services.ru:5050/std-013-20/sausage-store/sausage-backend:latest
