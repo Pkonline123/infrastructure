@@ -6,8 +6,6 @@ metadata:
   labels:
     app: frontend
 spec:
-  nodeSelector:
-    cpu: app=frontend
   revisionHistoryLimit: 15  
   strategy:
     type: Recreate
@@ -31,6 +29,8 @@ spec:
           mountPath: /etc/nginx/nginx.conf
           subPath: nginx.conf
           readOnly: true
+        nodeSelector:
+          cpu: app=frontend
       volumes:
       - name: nginx-conf
         configMap:
