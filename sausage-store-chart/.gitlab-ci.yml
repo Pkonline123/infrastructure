@@ -1,18 +1,9 @@
 variables:
-    VERSION: 1.0.${CI_PIPELINE_ID}
+  VERSION: 1.0.${CI_PIPELINE_ID}
 
 stages:
-  - deploy
+- deploy
 
 deploy:
   stage: deploy
-  script:
-    — |
-      <...> Kubeconfig create automation <...>
-
-      helm repo add nexus $NEXUS_HELM_REPO
-      helm repo update
-
-      helm upgrade --install sausage-store \
-      --atomic --timeout 15m \
-      nexus/sausage-store-chart
+  script: — | <...> Kubeconfig create automation <...> helm repo add nexus $NEXUS_HELM_REPO helm repo update helm upgrade --install sausage-store \ --atomic --timeout 15m \ std-013-20/sausage-store-chart
