@@ -17,7 +17,7 @@ deploy:
   - chmod 644 ~/.kube/config
   script:
   - |
-    helm repo add nexus $NEXUS_HELM_REPO
+    helm repo add nexus $NEXUS_HELM_REPO --username $NEXUS_USER --password $NEXUS_PASS
     helm repo update
 
     helm upgrade --install sausage-store \
