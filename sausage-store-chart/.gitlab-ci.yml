@@ -7,4 +7,10 @@ stages:
 deploy:
   stage: deploy
   script:
-  - "<...> Kubeconfig create automation <...> \nhelm repo add nexus $NEXUS_HELM_REPO \nhelm repo update \nhelm upgrade --install sausage-store \\ \n--atomic --timeout 15m \\ \nnexus/sausage-store-chart\n"
+  - |
+    <...> Kubeconfig create automation <...>
+    helm repo add nexus $NEXUS_HELM_REPO
+    helm repo update
+    helm upgrade --install sausage-store \
+    --atomic --timeout 15m \
+    nexus/sausage-store-chart
