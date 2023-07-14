@@ -14,12 +14,12 @@ kubernetes:
     changes:
     - kubernetes/**/*
 
-sausage-store-chart:
-  stage: module-pipelines
-  trigger:
-    include:
-    - "/sausage-store-chart/.gitlab-ci.yml"
-    strategy: depend
-  only:
-    changes:
-    - sausage-store-chart/**/*
+# sausage-store-chart:
+#   stage: module-pipelines
+#   trigger:
+#     include:
+#     - "/sausage-store-chart/.gitlab-ci.yml"
+#     strategy: depend
+#   only:
+#     changes:
+#     - sausage-store-chart/**/*
