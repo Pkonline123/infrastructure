@@ -7,6 +7,14 @@ stages:
 deploy:
   stage: deploy
   image: alpine/k8s:1.22.6
+  environment:
+    name: k8s
+    url: https://std-013-20.k8s.praktikum-services.tech
+  before_script:
+  - mkdir -p ~/.kube
+  - chmod 700 ~/.kube
+  - cat "$kubeconfig" > ~/.kube/config
+  - chmod 644 ~/.kube/config
   script:
   - |
     helm repo add nexus $NEXUS_HELM_REPO
