@@ -11,16 +11,15 @@ deploy:
     name: k8s
     url: https://std-013-20.k8s.praktikum-services.tech
   before_script:
-  - mkdir -p ~/.kube
-  - chmod 700 ~/.kube
-  - cat "$kubeconfig" > ~/.kube/config
-  - chmod 644 ~/.kube/config
+    - mkdir -p ~/.kube
+    - chmod 700 ~/.kube
+    - cat "$kubeconfig" > ~/.kube/config
+    - chmod 644 ~/.kube/config
   script:
   - |
     helm repo add nexus $NEXUS_HELM_REPO --username $NEXUS_USER --password $NEXUS_PASS
     helm repo update
-
+    echo $NEXUS_HELM_REPO
     helm upgrade --install sausage-store \
-    --set environment=test \
     --atomic --timeout 15m \
     nexus/sausage-store
