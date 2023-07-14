@@ -22,4 +22,4 @@ deploy:
 
     helm upgrade --install sausage-store \
     --atomic --timeout 15m \
-    nexus/sausage-store-chart
+    nexus/sausage-store
