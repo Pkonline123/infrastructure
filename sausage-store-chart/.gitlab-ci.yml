@@ -21,5 +21,6 @@ deploy:
     helm repo update
 
     helm upgrade --install sausage-store \
+    --set environment=test \
     --atomic --timeout 15m \
     nexus/sausage-store
