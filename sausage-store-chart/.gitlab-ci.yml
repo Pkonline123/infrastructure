@@ -8,8 +8,6 @@ deploy:
   stage: deploy
   script:
   - |
-    <...> Kubeconfig create automation <...>
-
     helm repo add nexus $NEXUS_HELM_REPO
     helm repo update
     
