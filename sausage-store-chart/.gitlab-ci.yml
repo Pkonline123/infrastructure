@@ -6,11 +6,12 @@ stages:
 
 deploy:
   stage: deploy
+  image: alpine/k8s:1.22.6
   script:
   - |
     helm repo add nexus $NEXUS_HELM_REPO
     helm repo update
-    
+
     helm upgrade --install sausage-store \
     --atomic --timeout 15m \
     nexus/sausage-store-chart
