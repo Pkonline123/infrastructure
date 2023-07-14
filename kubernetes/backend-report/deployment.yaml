@@ -6,9 +6,7 @@ metadata:
   labels:
     app: backend-report
 spec:
-  # replicas: 3
-  # Стратегия развёртывания. Recreate — удалит сначала все старые Pod'ы 
-  # Есть и более гибкая стратегии, например, RollingUpdate, которая будет обновлять Pod'ы порциями  
+  revisionHistoryLimit: 15 
   strategy:
     type: Recreate
   selector:
@@ -36,3 +34,24 @@ spec:
               containerPort: 8081
       imagePullSecrets:
             - name: docker-config-secret
+---
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: backend-report-hpa
+  labels:
+    app: backend-report-hpa
+spec:
+  minReplicas: 1
+  maxReplicas: 5
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: backend-report
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 75
