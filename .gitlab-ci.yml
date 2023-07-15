@@ -1,15 +1,15 @@
 variables:
-   VERSION: 1.0.${CI_PIPELINE_ID}
+  VERSION: 1.0.${CI_PIPELINE_ID}
 
 stages:
-  - module-pipelines
+- module-pipelines
 
 kubernetes:
   stage: module-pipelines
   trigger:
     include:
-      - "/kubernetes/.gitlab-ci.yml"
-    strategy: depend 
+    - "/kubernetes/.gitlab-ci.yml"
+    strategy: depend
   only:
     changes:
-      - kubernetes/**/*
+    - kubernetes/**/*

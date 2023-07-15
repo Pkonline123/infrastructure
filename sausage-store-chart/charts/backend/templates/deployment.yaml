@@ -1,0 +1,72 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{.Chart.Name}}"
+  labels:
+    app: "{{.Chart.Name}}"
+    app.kubernetes.io/name: "{{.Chart.Name}}"
+    app.kubernetes.io/instance: "{{ .Release.Name }}"
+    app.kubernetes.io/version: "{{.Chart.Version}}"
+    app.kubernetes.io/managed-by: "{{ .Release.Service }}"
+    helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    app.kubernetes.io/component: "{{.Chart.Name}}"
+    app.kubernetes.io/part-of: sausage-store
+    env: "{{ .Values.environment }}"
+spec:
+  revisionHistoryLimit: {{.Values.revisionHistoryLimit}}
+  replicas: {{.Values.replicas}}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: {{.Values.maxUnavailable}}
+      maxSurge: {{.Values.maxSurge}}
+  selector:
+    matchLabels:
+      app: "{{.Chart.Name}}"
+  template:
+    metadata:
+      labels:
+        app: "{{.Chart.Name}}"
+    spec:
+      containers:
+        - name: "{{.Chart.Name}}"
+          image: "{{ .Values.image.repository }}:{{.Values.image.tag}}"
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: SPRING_DATASOURCE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: "{{.Chart.Name}}"
+                  key: SPRING_DATASOURCE_URL
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: "{{.Chart.Name}}"
+                  key: SPRING_DATASOURCE_PASSWORD
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: "{{.Chart.Name}}"
+                  key: SPRING_DATASOURCE_USERNAME 
+            - name: REPORT_PATH
+              value: /app/logs
+          ports:
+            - name: "{{.Chart.Name}}"
+              containerPort: 8080
+          volumeMounts:
+            - name: logs
+              mountPath: /app/logs
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 30
+            timeoutSeconds: 1
+            failureThreshold: 6
+      volumes:
+        - name: logs
+          emptyDir: {}
+      imagePullSecrets:
+        - name: docker-config-secret
