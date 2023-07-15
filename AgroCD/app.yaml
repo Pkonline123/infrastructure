@@ -1,0 +1,52 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  # ArgoCD видит все установленные Helm-релизы в кластере, укажи своё имя, чтобы избежать конфликтов
+  name: sausage-store-std-013-20
+spec:
+  project: std-013-20
+  destination:
+    namespace: std-013-20
+    # Используй этот URL для работы с Kubernetes-кластером
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: ''
+    # Это ссылка к Helm-репозиторию с Helm-чартом
+    # repoURL: 'https://myusername:mypassword@nexus.k8s.praktikum-services.tech/repository/sausage-store-helm-andrey-zachitaylov-13/'
+    repoURL: 'https://nexus.k8s.praktikum-services.tech/repository/sausage-store-helm-andrey-zachitaylov-13/'
+    targetRevision: 0.1.1
+    chart: sausage-store
+    helm:
+      values: |
+        backend:
+          image:
+            repository: gitlab.praktikum-services.ru:5050/std-013-20/sausage-store/sausage-backend
+            tag: latest
+          revisionHistoryLimit: 15
+          replicas: 3
+          maxUnavailable: 20
+          maxSurge: 1
+          minAllowed:
+            cpu: 0m
+            memory: 0Mi
+          maxAllowed:
+            cpu: 1
+            memory: 500Mi
+        backend-report:
+          image:
+            repository: gitlab.praktikum-services.ru:5050/std-013-20/sausage-store/backend-report
+            tag: latest
+          revisionHistoryLimit: 15
+          minReplicas: 1
+          maxReplicas: 5
+          averageUtilization: 75
+        frontend:
+          image:
+            repository: gitlab.praktikum-services.ru:5050/std-013-20/sausage-store/sausage-frontend
+            tag: latest
+          fqdn: std-013-20.k8s.praktikum-services.tech
+          revisionHistoryLimit: 15
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: false
