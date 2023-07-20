@@ -21,5 +21,4 @@
         (sum(jvm_memory_used_bytes{area="heap"}) + sum(jvm_memory_committed_bytes{area="heap"})) / sum(jvm_memory_max_bytes{ area="heap"})
 
         (sum(jvm_memory_used_bytes{area="nonheap"}) + sum(jvm_memory_committed_bytes{area="nonheap"})) / sum(jvm_memory_max_bytes{ area="nonheap"})
-
-4тая метрика не работает, так как тут https://std-013-20-monitoring.k8s.praktikum-services.tech/metrics нет, такой метрики как jvm_memory_used_bytes
+        
